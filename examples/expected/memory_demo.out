@@ -1,0 +1,11 @@
+word  read of value        : 0x11223344
+bytes value+0 .. value+3   : 44 33 22 11 
+LB  of byte 0x80 (signed)  : -128
+LBU of byte 0x80 (unsigned): 128
+after SB 0xAB to value+0   : 0x112233AB
+sum of 10-word array       : 550
+strlen("segmented memory") : 16
+text  segment  (main)      : 0x00100000
+data  segment  (value)     : 0x00200000
+heap  segment  (break)     : 0x00300000
+stack segment  (sp)        : 0x004FFFFC

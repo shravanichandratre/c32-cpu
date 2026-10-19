@@ -1,0 +1,4 @@
+*** CPU FAULT: ExecuteViolation at pc=0x00200000 <payload> (address 0x00200000)
+    instruction fetch from non-executable data segment at 0x00200000
+    word at pc (would decode as): halt
+    after 3 instructions, call depth 0

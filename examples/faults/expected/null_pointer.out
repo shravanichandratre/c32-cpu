@@ -1,0 +1,4 @@
+*** CPU FAULT: SegmentationFault at pc=0x00100004 <main+0x4> (address 0x00000000)
+    word read at unmapped address 0x00000000
+    instruction: lw     a0, 0(t0)
+    after 1 instruction, call depth 0

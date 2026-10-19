@@ -1,0 +1,5 @@
+0x00000022
+*** CPU FAULT: MisalignedAccess at pc=0x00100018 <main+0x18> (address 0x00200002)
+    misaligned word read at 0x00200002 (words must be 4-byte aligned)
+    instruction: lw     a0, 2(t0)
+    after 6 instructions, call depth 0

@@ -1,0 +1,4 @@
+*** CPU FAULT: DivideByZero at pc=0x00100008 <main+0x8> (address 0x00100008)
+    integer division by zero
+    instruction: div    a0, t0, t1
+    after 2 instructions, call depth 0

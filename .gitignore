@@ -1,0 +1,5 @@
+build/
+build-*/
+*.c32
+*.o
+*.a

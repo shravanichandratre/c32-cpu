@@ -1,0 +1,116 @@
+# =============================================================================
+#  C32 CPU EMULATOR - REQUIREMENTS AND STEP-BY-STEP RUN GUIDE
+# =============================================================================
+#
+#  This is a pure C++17 project. It has NO Python packages and NO third-party
+#  libraries. Every line in this file is a comment, so running
+#  `pip install -r requirements.txt` is harmless (it installs nothing).
+#
+# -----------------------------------------------------------------------------
+#  1. SYSTEM REQUIREMENTS
+# -----------------------------------------------------------------------------
+#
+#  Required:
+#    - A C++17 compiler, any one of:
+#        g++     7 or newer     (tested with g++ 13.3)
+#        clang++ 6 or newer     (tested with clang++ 18)
+#        MSVC    2019 or newer  (use the CMake route on Windows)
+#    - GNU Make 3.81 or newer   (for the Makefile route)
+#        OR
+#      CMake 3.14 or newer      (for the CMake route)
+#    - bash + diff              (only for scripts/run_examples.sh)
+#
+#  Disk / memory: < 5 MB on disk; the emulator allocates 4 MiB of guest memory.
+#
+#  Install the toolchain if you don't have it:
+#    Ubuntu / Debian :  sudo apt install build-essential cmake
+#    Fedora          :  sudo dnf install gcc-c++ make cmake
+#    macOS           :  xcode-select --install        (and: brew install cmake)
+#    Windows         :  install Visual Studio (C++ workload) + CMake,
+#                       or use WSL and follow the Ubuntu steps.
+#
+#  Check your setup:
+#    g++ --version        (or clang++ --version)
+#    make --version
+#
+# -----------------------------------------------------------------------------
+#  2. BUILD
+# -----------------------------------------------------------------------------
+#
+#  Option A - Makefile (Linux / macOS / WSL):
+#    cd c32-cpu
+#    make                      # builds build/c32asm, build/c32sim, build/c32dis, build/c32tests
+#    make CXX=clang++          # (optional) build with clang instead of g++
+#
+#  Option B - CMake (any platform, including native Windows):
+#    cmake -S . -B build-cmake -DCMAKE_BUILD_TYPE=Release
+#    cmake --build build-cmake -j
+#    (binaries are in build-cmake/, or build-cmake/Release/ with MSVC)
+#
+# -----------------------------------------------------------------------------
+#  3. TEST
+# -----------------------------------------------------------------------------
+#
+#    make test                 # 35 unit tests + 16 example programs
+#    ./build/c32tests          # unit tests only
+#    ./scripts/run_examples.sh # example programs only (compares with expected output)
+#    ctest --test-dir build-cmake --output-on-failure      # CMake route
+#
+# -----------------------------------------------------------------------------
+#  4. RUN PROGRAMS
+# -----------------------------------------------------------------------------
+#
+#  Run assembly source directly (assembled in memory):
+#    ./build/c32sim examples/hello.asm
+#    ./build/c32sim examples/factorial.asm
+#    ./build/c32sim examples/fibonacci.asm
+#    ./build/c32sim examples/hanoi.asm
+#    ./build/c32sim examples/ackermann.asm
+#    ./build/c32sim examples/memory_demo.asm
+#    ./build/c32sim examples/heap_list.asm
+#    ./build/c32sim examples/bubble_sort.asm
+#    ./build/c32sim examples/sum_input.asm < examples/inputs/sum_input.txt
+#
+#  Or assemble to a binary first, then run / inspect the binary:
+#    ./build/c32asm examples/factorial.asm -o factorial.c32 --listing
+#    ./build/c32sim factorial.c32
+#    ./build/c32dis factorial.c32
+#
+#  Useful simulator options:
+#    ./build/c32sim --stats examples/fibonacci.asm     # instructions, cycles, call depth, stack use
+#    ./build/c32sim --trace examples/factorial.asm     # every instruction + its effects (stderr)
+#    ./build/c32sim --regs  examples/hello.asm         # register file at exit
+#    ./build/c32sim --debug examples/factorial.asm     # interactive debugger (type h)
+#    ./build/c32sim --dump 0x00200000:64 examples/memory_demo.asm
+#
+#  See hardware protection in action (each one stops with a CPU fault, exit 3):
+#    ./build/c32sim examples/faults/stack_overflow.asm
+#    ./build/c32sim examples/faults/write_text.asm
+#    ./build/c32sim examples/faults/misaligned.asm
+#    ./build/c32sim examples/faults/null_pointer.asm
+#    ./build/c32sim examples/faults/heap_overflow.asm
+#    ./build/c32sim examples/faults/exec_data.asm
+#    ./build/c32sim examples/faults/divide_by_zero.asm
+#
+#  Print the instruction-set reference:
+#    ./build/c32dis --isa       (or: make isa)
+#
+#  Shortcut through make:
+#    make run PROG=examples/hanoi.asm ARGS="--stats"
+#
+# -----------------------------------------------------------------------------
+#  5. WRITE YOUR OWN PROGRAM
+# -----------------------------------------------------------------------------
+#
+#    1. Create my_program.asm (start from examples/hello.asm).
+#    2. ./build/c32sim my_program.asm
+#    3. Errors are reported as  file:line: error: message
+#    See README.md for the full ISA, assembler syntax and calling convention.
+#
+# -----------------------------------------------------------------------------
+#  6. CLEAN
+# -----------------------------------------------------------------------------
+#
+#    make clean
+#    rm -rf build-cmake
+# =============================================================================

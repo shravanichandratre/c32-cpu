@@ -1,0 +1,5 @@
+recursing forever...
+*** CPU FAULT: StackOverflow at pc=0x00100024 <down+0xC> (address 0x003FFFFC)
+    stack overflow: push would move sp to 0x003FFFFC, below the stack segment base 0x00400000 (recursion too deep?)
+    instruction: call   0x00100018 <down>
+    after 349528 instructions, call depth 87381

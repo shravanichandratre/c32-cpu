@@ -1,0 +1,4 @@
+*** CPU FAULT: WriteViolation at pc=0x0010000C <main+0xC> (address 0x00100000)
+    word write to read-only text segment at 0x00100000
+    instruction: sw     t1, 0(t0)
+    after 3 instructions, call depth 0
