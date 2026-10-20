@@ -1,9 +1,8 @@
-# C32 — a 32-bit CPU emulator with a custom ISA
+# 32-bit CPU simulator with a custom ISA
 
 C32 is a 32-bit processor modelled in C++17. The project includes a custom instruction set, a
 segmented, permission-checked memory system and hardware support for stack-based function
-calls and recursion. A two-pass assembler, a disassembler, an interactive debugger, example
-programs and a test suite complete the toolchain.
+calls and recursion.
 
 - **Custom ISA**: 48 fixed-width 32-bit instructions in 4 encoding formats, 16 registers.
   The emulator runs a full **fetch → decode → execute** cycle per instruction.
